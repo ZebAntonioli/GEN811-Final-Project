@@ -47,3 +47,18 @@ trimmomatic PE -threads 32 $FORWARD $REVERSE\
 The produced files include forward paired reads, reverse paired reads, forward unpaired reads, and reverse unpaired reads in the form of *fastq.gz* files. 
 
 # Readmapping
+Using the genomics conda environment, the Burrows-Wheeler Alignment tool, or *bwa*, is used in the following script to align the forward and reverse reads to the reference _fasta_ file.
+```
+#! /bin/bash
+
+date
+
+FW=$1
+RV=$2
+
+name="$(basename "$FW" | cut -d'_' -f1)"
+
+bwa mem -t 24 GCF_023699985.2_Ovbor_1.2_genomic.fna $FW $RV > ./WholeGenomeFiles/$name.sam
+
+echo "DONE"
+```
