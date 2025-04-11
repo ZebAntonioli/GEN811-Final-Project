@@ -14,13 +14,13 @@ This project is investigating a potential X-linked disorder in *Odocoileus virgi
 * Filtering variants that are unique to the affected group compared to the control group
 
 # Obtaining Reads
-Using the *wget* command and the URL provided by the HCGS, the untrimmed *fastq.gz* files were retrieived and imported into my home directory. 
+Using the 'wget' command and the URL provided by the HCGS, the untrimmed 'fastq.gz' files were retrieived and imported into my home directory. 
 ```
 wget "example_url"
 ```
 
 # Trimming
-Trimming was done with the use of *Trimmomatic*. The genomics conda environment must first be activated.
+Trimming was done with the use of 'Trimmomatic'. The genomics conda environment must first be activated.
 ```
 conda activate genomics
 ```
@@ -44,10 +44,10 @@ trimmomatic PE -threads 32 $FORWARD $REVERSE\
     LEADING:3 TRAILING:3\
     SLIDINGWINDOW:4:10 MINLEN:36
 ```
-The produced files include forward paired reads, reverse paired reads, forward unpaired reads, and reverse unpaired reads in the form of *fastq.gz* files. 
+The produced files include forward paired reads, reverse paired reads, forward unpaired reads, and reverse unpaired reads in the form of 'fastq.gz' files. 
 
 # Readmapping
-Using the genomics conda environment, the Burrows-Wheeler Alignment tool, or *bwa*, is used in the following script to align the forward and reverse reads to the reference _fasta_ file.
+Using the genomics conda environment, the Burrows-Wheeler Alignment tool, or 'bwa', is used in the following script to align the forward and reverse reads to the reference 'fasta file'.
 ```
 #! /bin/bash
 
