@@ -12,6 +12,7 @@ This project is investigating a potential X-linked disorder in *Odocoileus virgi
 * Variant calling from the BAM files compared to the reference genome with bcftools
 * Variant effect predictions from the resulting VCF files using esembl-VEP
 * Filtering variants that are unique to the affected group compared to the control group
+* Visualizing the varaints of interest in a genome browser
 
 # Obtaining Reads
 Using the 'wget' command and the URL provided by the HCGS, the untrimmed `fastq.gz` files were retrieived and imported into my home directory. 
@@ -62,3 +63,12 @@ bwa mem -t 24 GCF_023699985.2_Ovbor_1.2_genomic.fna $FW $RV > ./WholeGenomeFiles
 
 echo "DONE"
 ```
+# SAM to BAM
+
+# Variant Calling 
+
+# Variant Effect Predictor
+
+# Variant Filtering
+
+# Visualization
