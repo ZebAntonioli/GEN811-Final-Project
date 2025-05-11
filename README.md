@@ -187,9 +187,57 @@ done
 
 echo "DONE"
 ```
+Using the following script, `VEP` was used to produce a text output file with the predicted effects the varaints in the `vcf` files would have when compared to the reference genome ranging from low to high impact. 
+```
+#! /bin/bash
 
+date 
+
+directory=$1
+
+source activate ensembl-vep
+
+for x in $(ls $directory)
+do
+  if [[ $x == *.vcf.gz ]] 
+  then
+  name="$(basename "$x" .vcf.gz)"
+  vep -i $x --fasta GCF_023699985.2_Ovbor_1.2_genomic.fna.gz --gff GCF_023699985.2_Ovbor_1.2_genomic.sorted.gff.gz -o ${name}.txt
+  else 
+  echo $x is not a zipped vcf
+  sleep 5
+  fi
+done
+
+sleep 5
+
+echo "DONE"
+```
 # Variant Filtering
-
+The resulting `txt` files were then used to filter out the variants that occured in both the control and affected group leaving only the unique varaints found in the affected group only. This was done by concatinating the affected deer `txt` outputs together as well as the control deer `txt` files into a seperate file. These files were then sorted and had all of the repeated lines removed. 
+```
+cat "affected.txt files" > combined_affected.txt
+sort combined_affected.txt | uniq > sorted_combined_affected.txt
+cat "control.txt files" > combined_control.txt
+sort combined_control.txt | uniq > sorted_combined_control.txt
+```
+The combined and sorted files were then used with `grep` to remove any variants that occured in the control group as well.
+```
+grep -Fvx -f sorted_combined_control.txt sorted_combined_affected.txt > unique_affected_variants.txt
+```
+These unique affected variants were then used to filter out for high impact variants on the X chromosome using `grep`. 
+```
+grep "06780" unique_affected_variants > high_impact_varaints.txt
+grep "HIGH" unique_affected_variants > high_impact_varaints.txt
+```
+To determine if a common high impact variant was found across all of the affected deer, the combined `txt` files were used again, but this time, the varaints were counted to determine across how many individuals the varaint occured. 
+```
+sort combined_affected.txt | uniq -c > counted_combined_affected.txt
+```
+The counted file was then used with `grep` to filter out the unwanted varaints by using the unique affected varaints.
+```
+grep -F -f unique_affected_variants.txt counted_combined_affected.txt > counted_unique_affected.txt
+```
 # Visualization
 ![Variant1](https://github.com/user-attachments/assets/9fd74256-d593-4e6e-b512-29549a673699)
 ![Variant2](https://github.com/user-attachments/assets/4613c8e2-f9c1-4aa8-a129-b1ab00fea978)
