@@ -227,16 +227,16 @@ grep -Fvx -f sorted_combined_control.txt sorted_combined_affected.txt > unique_a
 ```
 These unique affected variants were then used to filter out for high impact variants on the X chromosome using `grep`. 
 ```
-grep "06780" unique_affected_variants > high_impact_varaints.txt
-grep "HIGH" unique_affected_variants > high_impact_varaints.txt
+grep "069708" unique_affected_variants.txt > unique_affectedXchr_varaints.txt
+grep "HIGH" unique_affectedXchr_variants.txt > high_impact_Xchr_varaints.txt
 ```
-To determine if a common high impact variant was found across all of the affected deer, the combined `txt` files were used again, but this time, the varaints were counted to determine across how many individuals the varaint occured. 
+To determine if a common high impact variant located on the X chromosome was found across all of the affected deer, the combined `txt` files were used again, but this time, the varaints were counted to determine across how many individuals the varaint occured. 
 ```
 sort combined_affected.txt | uniq -c > counted_combined_affected.txt
 ```
-The counted file was then used with `grep` to filter out the unwanted varaints by using the unique affected varaints.
+The counted file was then used with `grep` to filter out the unwanted varaints by using the unique affected X chromosome varaints.
 ```
-grep -F -f unique_affected_variants.txt counted_combined_affected.txt > counted_unique_affected.txt
+grep -F -f unique_affectedXchr_variants.txt counted_combined_affected.txt > counted_uniqueXchr_affected.txt
 ```
 # Visualization
 ![Variant1](https://github.com/user-attachments/assets/9fd74256-d593-4e6e-b512-29549a673699)
