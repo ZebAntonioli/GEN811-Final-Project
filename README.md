@@ -238,9 +238,88 @@ The counted file was then used with `grep` to filter out the unwanted varaints b
 ```
 grep -F -f unique_affectedXchr_variants.txt counted_combined_affected.txt > counted_uniqueXchr_affected.txt
 ```
+The resulting files are then able to be used to determine which variants unique to the affected deer are of high impact and how many deer were shared the same variant. 
+The variant below occured across four of the five affected deer. 
+```
+NC_069708.1_51230982_C/T	NC_069708.1:51230982	T	110126703	XM_070461758.1	Transcript	stop_gained	5167	3036	1012	W/*	tgG/tgA	-	IMPACT=HIGH;STRAND=-1;SOURCE=GCF_023699985.2_Ovbor_1.2_genomic.sorted.gff.gz
+```
+The two variants below occured in three of the five affected deer. 
+```
+3 NC_069708.1_21635024_CCC/CCCGCCC	NC_069708.1:21635024-21635026	CCCGCCC	110148474	XM_020910489.2	Transcript	frameshift_variant	963-965	963-965	321-322	SP/SPPX	tcCCCa/tcCCCGCCCa	-	IMPACT=HIGH;STRAND=1;SOURCE=GCF_023699985.2_Ovbor_1.2_genomic.sorted.gff.gz
+
+ 3 NC_069708.1_1675322_GG/GGG	NC_069708.1:1675322-1675323	GGG	110151672	XM_070461784.1	Transcript	frameshift_variant	1050-1051	1050-1051	350-351	FQ/FPX	ttCCag/ttCCCag	-	IMPACT=HIGH;STRAND=-1;SOURCE=GCF_023699985.2_Ovbor_1.2_genomic.sorted.gff.gz
+```
 # Visualization
+The variants described above were both of high impact as well as in multiple of the affected individuals. The visualization of the varaints in relation to the genes that are impacted is important in determining which variants are likely canidates to explore further in determining the root cause of the neurologic disorder of the deer on Martha's Vineyard. `VEP` was used again to produce `vcf` files rather than the `txt` outputs from before with the following script. 
+```
+#! /bin/bash
+
+date 
+
+directory=$1
+
+
+for x in $(ls $directory)
+do
+  if [[ $x == *.vcf.gz ]] 
+  then
+  name="$(basename "$x" .vcf.gz)"
+  vep -i $x --fasta GCF_023699985.2_Ovbor_1.2_genomic.fna.gz --gff GCF_023699985.2_Ovbor_1.2_genomic.sorted.gff.gz --vcf -o ${name}.vcf
+  else 
+  echo $x is not a vcf
+  sleep 5
+  fi
+done
+
+sleep 5
+
+echo "DONE"
+```
+The resulting `vcf` files were then used along with the reference `fasta` and `gff` in `JBrowse 2`. This is a genome browsing tool to visualize where the variants are in terms of exons of the genes affected as described in the `txt` and `vcf` files produced by `VEP`. Before loading the `vcf` files into `JBrowse 2`, the files had to be compressed and indexed using the following script. 
+```
+#! /bin/bash
+
+date 
+
+directory=$1
+
+source activate ensembl-vep
+
+for x in $(ls $directory)
+do
+  if [[ $x == *.vcf ]] 
+  then
+  name="$(basename "$x" .vcf)"
+  bgzip $x
+  else 
+  echo $x is not a vcf
+  sleep 5
+  fi
+done
+
+for x in $(ls $directory)
+do
+  if [[ $x == *.vcf.gz ]] 
+  then
+  name="$(basename "$x" .vcf.gz)"
+  tabix -p vcf $x
+  else 
+  echo $x is not a zipped vcf
+  sleep 5
+  fi
+done
+
+echo "DONE"
+```
+The resulting files were then able to be downloaded and loaded into `JBrowse 2`. The following figures are of the previously described variants and show the variant along with the location in which the varaint occurs within the affected gene. 
+
+The figure below shows the varaint that occurs in four of the five affected deer. This variant introduces a transcription stop within the G protein-coupled receptor associated sorting protein 1. The transcription stop occurs in the middle of a reference exon which would most likely negatively affect the protein. The affected protein is associated somewhat with neurologic development, but there was a lack of literature that indicated if a mutation within this protein could lead to neurodegeneration. 
 ![Variant1](https://github.com/user-attachments/assets/9fd74256-d593-4e6e-b512-29549a673699)
+
+The figure below shows the first of the two varaints that occurs in three of the five affected deer. This varaint introduces a frameshift in the exon of the casein kinase I-like protein. This frameshift could drastically alter the resulting protein hence why the predicted effect of this variant is high. The homologous protein in humans is also associated with neurodegenerative disorders making this variant especially interesting. 
 ![Variant2](https://github.com/user-attachments/assets/4613c8e2-f9c1-4aa8-a129-b1ab00fea978)
+
+The final varaint is the second variant that affects three out of the five deer. This variant is an insertion that causes a frameshift within the exon of the melanoma-associated antigen B17-like protein. The effected gene is not directly tied to neurologic function, but is still an interesting variant. 
 ![Variant3](https://github.com/user-attachments/assets/33ceebe4-1f0f-45ca-8bb8-ce34bee3ead4)
 
 
