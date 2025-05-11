@@ -2,7 +2,7 @@
 Final project for bioinformatics lab looking into genetic variant analysis of whitetail deer on Martha's Vineyard
 
 # Background Information
-This project is investigating a potential X-linked disorder in *Odocoileus virginianus* or whitetail deer (or white-tailed deer). 
+This project is investigating a potential X-linked disorder in *Odocoileus virginianus* or whitetail deer (or white-tailed deer) of Martha's Vineyard. Young male deer, also known as button bucks, have been found showing signs of neurodegeneration. After multiple rounds of negative diagnostic tests, the hypothesis was formed that this could be a genetic disorder and if that was the case, the most likely canidate was that of an X-linked nature since no female deer had been found with the same symptoms. Sequencing was performed on kidney and spleen tissue of five affected and five unaffected deer. These sequences were then used to find potential varaints of interest to explore further. 
 
 # Pipeline Overview
 * Obtain Reads
