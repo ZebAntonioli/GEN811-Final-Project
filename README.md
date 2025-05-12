@@ -334,6 +334,8 @@ Li H. (2013) Aligning sequence reads, clone sequences and assembly contigs with 
 
 H. Li. 2011. A statistical framework for SNP calling, mutation discovery, association mapping and population genetical parameter estimation from sequencing data. Bioinformatics. 27(21): 2987-2993.
 
+London, E. W., Roca, A. L., Novakofski, J. E., & Mateus-Pinilla, N. E. (2022). A De Novo Chromosome-Level Genome Assembly of the White-Tailed Deer, Odocoileus Virginianus. The Journal of heredity, 113(4), 479–489. https://doi.org/10.1093/jhered/esac022
+
 McLaren W, Gil L, Hunt SE, Riat HS, Ritchie GR, Thormann A, Flicek P, Cunningham F., P. Danecek, J. K. Bonfield, J. Liddle, J. Marshall, V. Ohan, M. O. Pollard, A. Whitwham, T. Keane, S. A. McCarthy, R. M. Davies, and H. Li. 2021. Twelve years of SAMtools and BCFtools. Gigascience. 10(2): giab008.
 
 The Ensembl Variant Effect Predictor. Genome Biology Jun 6;17(1):122. (2016) doi:10.1186/s13059-016-0974-4
